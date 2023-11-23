@@ -1,0 +1,47 @@
+{
+  "name": "react-opening-hours",
+  "version": "1.0.0",
+  "description": "A simple form UI for collecting hours of operation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ladle": "ladle serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perrottarichard/react-opening-hours.git"
+  },
+  "keywords": [
+    "business",
+    "hours",
+    "select",
+    "zero-dependencies",
+    "opening-hours",
+    "open",
+    "close",
+    "schedule",
+    "calendar",
+    "hours-of-operation",
+    "operating",
+    "times",
+    "days",
+    "weekly"
+  ],
+  "author": "Perrottarichard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Perrottarichard/react-opening-hours/issues"
+  },
+  "homepage": "https://github.com/Perrottarichard/react-opening-hours#readme",
+  "devDependencies": {
+    "@ladle/react": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^8.0.1"
+  },
+  "dependencies": {
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.1.0"
+  }
+}
