@@ -8,7 +8,7 @@ To install react-opening-hours with `npm`:
 
     npm install react-opening-hours --save
 
-To install material-table with `yarn`:
+To install react-opening-hours with `yarn`:
 
     yarn add react-opening-hours
 
