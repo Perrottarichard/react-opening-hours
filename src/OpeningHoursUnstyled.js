@@ -1,4 +1,6 @@
+import React from 'react';
 import { cloneElement, useEffect, useState } from 'react';
+window.React = React
 
 const timeOptions12 = [
   {
