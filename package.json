@@ -2,10 +2,11 @@
   "name": "react-opening-hours",
   "version": "1.0.0",
   "description": "A simple form UI for collecting hours of operation",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ladle": "ladle serve"
+    "ladle": "ladle serve",
+    "build": "esbuild src/index.js --bundle --outdir=dist"
   },
   "repository": {
     "type": "git",
@@ -33,15 +34,22 @@
     "url": "https://github.com/Perrottarichard/react-opening-hours/issues"
   },
   "homepage": "https://github.com/Perrottarichard/react-opening-hours#readme",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@ladle/react": "^4.0.0",
+    "esbuild": "^0.19.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tsup": "^8.0.1"
+    "react-dom": "^18.2.0"
   },
   "dependencies": {
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.1.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17 || ^18",
+    "react-dom": "^16.8 || ^17 || ^18"
   }
 }
