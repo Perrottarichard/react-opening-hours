@@ -441,9 +441,9 @@ const OpeningHoursUnstyled = (props) => {
     values,
     ampm,
     verticalTimePairs,
-    selectComponent,
     rootContainerStyles,
     rootContainerClassName,
+    dayButtonComponent,
     dayButtonContainerStyles,
     dayButtonContainerClassName,
     dayButtonActiveElementStyles,
@@ -454,16 +454,17 @@ const OpeningHoursUnstyled = (props) => {
     labelContainerClassName,
     labelElementStyles,
     labelElementClassName,
+    copyButtonComponent,
     copyButtonContainerStyles,
     copyButtonContainerClassName,
     copyButtonElementStyles,
     copyButtonElementClassName,
+    selectComponent,
     selectContainerStyles,
     selectContainerClassName,
     selectElementStyles,
     selectElementClassName,
     showCopyToAll,
-    copyButtonComponent,
   } = props;
   let timeOptions = ampm ? timeOptions12 : timeOptions24;
 
@@ -611,6 +612,15 @@ const OpeningHoursUnstyled = (props) => {
         {daysConfig &&
           daysConfig.map((day, i, arr) => {
             if (shouldShowDayAsOpen(day, arr) && day.id.split('_')[1] !== 'close') {
+              if (dayButtonComponent) {
+                return cloneElement(dayButtonComponent, {
+                  key: `${day.id}${i}-dayButton`,
+                  type: 'button',
+                  style: dayButtonActiveElementStyles,
+                  className: dayButtonActiveElementClassName,
+                  onClick: () => hideDayToggle(day),
+                });
+              }
               return (
                 <button
                   type="button"
@@ -623,6 +633,15 @@ const OpeningHoursUnstyled = (props) => {
                 </button>
               );
             } else if (shouldShowDayAsClosed(day, arr) && day.id.split('_')[1] !== 'close') {
+              if (dayButtonComponent) {
+                return cloneElement(dayButtonComponent, {
+                  key: `${day.id}${i}-dayButton`,
+                  type: 'button',
+                  style: dayButtonInactiveElementStyles,
+                  className: dayButtonInactiveElementClassName,
+                  onClick: () => showDayToggle(day),
+                });
+              }
               return (
                 <button
                   type="button"
