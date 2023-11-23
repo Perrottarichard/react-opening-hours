@@ -17,7 +17,7 @@ To install react-opening-hours with `yarn`:
 Here is a basic example of using react-opening-hours in your form.
 
 ```jsx
-import OpeningHoursUnstyled from "react-opening-hours";
+import { OpeningHoursUnstyled } from "react-opening-hours";
 
 const MyForm = () => {
     return (

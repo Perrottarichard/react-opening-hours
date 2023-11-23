@@ -1,6 +1,6 @@
 {
   "name": "react-opening-hours",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A simple form UI for collecting hours of operation",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

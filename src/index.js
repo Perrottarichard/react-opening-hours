@@ -1,1 +1,1 @@
-export {default as OpeningHoursUnstyled} from './OpeningHoursUnstyled';
+export { default as OpeningHoursUnstyled } from './OpeningHoursUnstyled.jsx';

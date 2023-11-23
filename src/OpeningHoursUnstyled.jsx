@@ -1,6 +1,6 @@
 import React from 'react';
 import { cloneElement, useEffect, useState } from 'react';
-window.React = React
+window.React = React;
 
 const timeOptions12 = [
   {
@@ -463,7 +463,7 @@ const OpeningHoursUnstyled = (props) => {
     selectElementStyles,
     selectElementClassName,
     showCopyToAll,
-    copyToAllButtonComponent,
+    copyButtonComponent,
   } = props;
   let timeOptions = ampm ? timeOptions12 : timeOptions24;
 
@@ -558,7 +558,7 @@ const OpeningHoursUnstyled = (props) => {
     setDaysConfig(newDaysConfig);
   };
 
-  const copyToAll = (dayToCopy) => {
+  const copyAll = (dayToCopy) => {
     const [openDay, closeDay] = getMatchingDayPair(dayToCopy, daysConfig);
     const newDaysConfig = daysConfig.map((day, i, arr) => {
       if (
@@ -598,13 +598,13 @@ const OpeningHoursUnstyled = (props) => {
         rootContainerStyles
           ? rootContainerStyles
           : !rootContainerClassName
-          ? {
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'start',
-              alignItems: 'center',
-            }
-          : null
+            ? {
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                alignItems: 'center',
+              }
+            : null
       }
     >
       <div className={dayButtonContainerClassName} style={dayButtonContainerStyles}>
@@ -631,10 +631,10 @@ const OpeningHoursUnstyled = (props) => {
                     dayButtonInactiveElementStyles
                       ? dayButtonInactiveElementStyles
                       : dayButtonActiveElementClassName
-                      ? null
-                      : {
-                          opacity: 0.3,
-                        }
+                        ? null
+                        : {
+                            opacity: 0.3,
+                          }
                   }
                   onClick={() => showDayToggle(day)}
                   className={dayButtonInactiveElementClassName}
@@ -795,11 +795,11 @@ const OpeningHoursUnstyled = (props) => {
                         className={copyButtonContainerClassName}
                       >
                         <div>
-                          {copyToAllButtonComponent ? (
-                            cloneElement(copyToAllButtonComponent, {
+                          {copyButtonComponent ? (
+                            cloneElement(copyButtonComponent, {
                               key: `${close.id}-${i}-button`,
                               type: 'button',
-                              onClick: () => copyToAll(day),
+                              onClick: () => copyAll(day),
                               className: copyButtonElementClassName,
                               style: copyButtonElementStyles,
                             })
@@ -807,7 +807,7 @@ const OpeningHoursUnstyled = (props) => {
                             <button
                               key={`${close.id}-${i}-button`}
                               type="button"
-                              onClick={() => copyToAll(day)}
+                              onClick={() => copyAll(day)}
                               className={copyButtonElementClassName}
                               style={copyButtonElementStyles}
                             >
