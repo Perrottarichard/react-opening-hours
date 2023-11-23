@@ -16,20 +16,19 @@
     "business",
     "hours",
     "select",
-    "zero-dependencies",
     "opening-hours",
-    "open",
-    "close",
+    "open hours",
+    "close hours",
     "schedule",
     "calendar",
     "hours-of-operation",
-    "operating",
+    "operating hours",
     "times",
     "days",
     "weekly"
   ],
   "author": "Perrottarichard",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Perrottarichard/react-opening-hours/issues"
   },
@@ -40,13 +39,11 @@
   "devDependencies": {
     "@ladle/react": "^4.0.0",
     "esbuild": "^0.19.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "dependencies": {
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "react": "^16.8 || ^17 || ^18",
