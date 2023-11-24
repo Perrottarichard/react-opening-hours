@@ -259,6 +259,7 @@ const OpeningHoursUnstyled = (props) => {
     dayButtonInactiveElementStyles,
     dayButtonActiveElementClassName,
     dayButtonInactiveElementClassName,
+    renderLabel,
     labelContainerStyles,
     labelContainerClassName,
     labelElementStyles,
@@ -426,6 +427,7 @@ const OpeningHoursUnstyled = (props) => {
                   key: `${day.id}${i}-btn`,
                   text: day.label[0],
                   onClick: () => hideDayToggle(day),
+                  active: true,
                 });
               }
               return (
@@ -445,6 +447,7 @@ const OpeningHoursUnstyled = (props) => {
                   key: `${day.id}${i}-btn`,
                   text: day.label[0],
                   onClick: () => showDayToggle(day),
+                  active: false,
                 });
               }
               return (
@@ -518,14 +521,22 @@ const OpeningHoursUnstyled = (props) => {
                       className={labelContainerClassName}
                       style={labelContainerStyles}
                     >
-                      <label
-                        key={`${day.id}-${i}-label`}
-                        htmlFor={`${day.id}-label`}
-                        className={labelElementClassName}
-                        style={labelElementStyles}
-                      >
-                        {day.label}
-                      </label>
+                      {typeof renderLabel === 'function' ? (
+                        renderLabel({
+                          key: `${day.id}-${i}-label`,
+                          htmlFor: `${day.id}-label`,
+                          label: day.label,
+                        })
+                      ) : (
+                        <label
+                          key={`${day.id}-${i}-label`}
+                          htmlFor={`${day.id}-label`}
+                          className={labelElementClassName}
+                          style={labelElementStyles}
+                        >
+                          {day.label}
+                        </label>
+                      )}
                     </div>
                     <div
                       key={`${open.id}-${i}-selectOpenDiv`}
