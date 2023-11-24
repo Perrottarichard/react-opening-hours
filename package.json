@@ -1,6 +1,6 @@
 {
   "name": "react-opening-hours",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A simple form UI for collecting hours of operation",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/Perrottarichard/react-opening-hours/issues"
   },
-  "homepage": "https://github.com/Perrottarichard/react-opening-hours#readme",
+  "homepage": "https://sprightly-cendol-934003.netlify.app/",
   "files": [
     "dist"
   ],
