@@ -1,6 +1,4 @@
-<h1 align="center">react-opening-hours</h1>
-
-# Check out the docs
+<h1 align="center">React Opening Hours</h1>
 
 [Docs](https://sprightly-cendol-934003.netlify.app)
 
