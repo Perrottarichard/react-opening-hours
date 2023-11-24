@@ -269,6 +269,7 @@ const OpeningHoursUnstyled = (props) => {
     copyButtonContainerClassName,
     copyButtonElementStyles,
     copyButtonElementClassName,
+    selectType,
     renderSelect,
     selectContainerStyles,
     selectContainerClassName,
@@ -424,7 +425,7 @@ const OpeningHoursUnstyled = (props) => {
             if (shouldShowDayAsOpen(day, arr) && day.id.split('_')[1] !== 'close') {
               if (typeof renderDayButton === 'function') {
                 return renderDayButton({
-                  key: `${day.id}${i}-btn`,
+                  id: `${day.id}${i}-btn`,
                   text: day.label[0],
                   onClick: () => hideDayToggle(day),
                   active: true,
@@ -444,7 +445,7 @@ const OpeningHoursUnstyled = (props) => {
             } else if (shouldShowDayAsClosed(day, arr) && day.id.split('_')[1] !== 'close') {
               if (typeof renderDayButton === 'function') {
                 return renderDayButton({
-                  key: `${day.id}${i}-btn`,
+                  id: `${day.id}${i}-btn`,
                   text: day.label[0],
                   onClick: () => showDayToggle(day),
                   active: false,
@@ -523,7 +524,7 @@ const OpeningHoursUnstyled = (props) => {
                     >
                       {typeof renderLabel === 'function' ? (
                         renderLabel({
-                          key: `${day.id}-${i}-label`,
+                          id: `${day.id}-${i}-label`,
                           htmlFor: `${day.id}-label`,
                           label: day.label,
                         })
@@ -545,13 +546,24 @@ const OpeningHoursUnstyled = (props) => {
                     >
                       {typeof renderSelect === 'function' ? (
                         renderSelect({
-                          key: `${open.id}${i}-select`,
+                          id: `${open.id}${i}-select`,
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, open, arr)
                           ),
-                          value: timeOptions.filter((t) => t.value === formValues[open.id]),
+                          value: timeOptions.find((t) => t.value === formValues[open.id]),
                           onChange: (event) => {
-                            handleChangeTime(open, event.value);
+                            switch (selectType) {
+                              case 'react-select':
+                                handleChangeTime(open, event.value);
+                                break;
+
+                              case 'native':
+                                handleChangeTime(open, event.target.value);
+                                break;
+
+                              default:
+                                console.log('Unknown select type');
+                            }
                           },
                         })
                       ) : (
@@ -583,13 +595,24 @@ const OpeningHoursUnstyled = (props) => {
                     >
                       {typeof renderSelect === 'function' ? (
                         renderSelect({
-                          key: `${close.id}${i}-select`,
+                          id: `${close.id}${i}-select`,
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, close, arr)
                           ),
-                          value: timeOptions.filter((t) => t.value === formValues[close.id]),
+                          value: timeOptions.find((t) => t.value === formValues[close.id]),
                           onChange: (event) => {
-                            handleChangeTime(close, event.value);
+                            switch (selectType) {
+                              case 'react-select':
+                                handleChangeTime(close, event.value);
+                                break;
+
+                              case 'native':
+                                handleChangeTime(close, event.target.value);
+                                break;
+
+                              default:
+                                console.log('Unknown select type');
+                            }
                           },
                         })
                       ) : (
