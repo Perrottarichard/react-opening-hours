@@ -1,4 +1,7 @@
+import { CopyAllRounded } from '@mui/icons-material';
 import { OpeningHoursUnstyled } from './index';
+import { Button, IconButton, Tooltip } from '@mui/material';
+import Select from 'react-select';
 export default {
   title: 'OpeningHoursUnstyledStory',
 };
@@ -23,5 +26,25 @@ export const OpeningHoursUnstyledStory = () => (
     getValues={(values) => console.log(values)}
     ampm
     showCopyToAll
+    verticalTimePairs
+    renderDayButton={({ key, text, onClick }) => (
+      <Button
+        variant="outlined"
+        color="secondary"
+        key={key}
+        onClick={onClick}
+        sx={{ borderRadius: '8px', m: 1 }}
+      >
+        {text}
+      </Button>
+    )}
+    renderCopyButton={({ onClick }) => (
+      <Tooltip title="Copy To All">
+        <IconButton onClick={onClick} sx={{ position: 'absolute', right: 20, top: -10 }}>
+          <CopyAllRounded />
+        </IconButton>
+      </Tooltip>
+    )}
+    renderSelect={(props) => <Select {...props} />}
   />
 );

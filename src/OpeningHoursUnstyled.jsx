@@ -1,5 +1,5 @@
 import React from 'react';
-import { cloneElement, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 window.React = React;
 
 const timeOptions12 = [
@@ -197,200 +197,9 @@ const timeOptions12 = [
   },
 ];
 
-const timeOptions24 = [
-  {
-    value: '00:00:00',
-    label: '00:00:00',
-  },
-  {
-    value: '00:30:00',
-    label: '00:30:00',
-  },
-  {
-    value: '01:00:00',
-    label: '01:00:00',
-  },
-  {
-    value: '01:30:00',
-    label: '01:30:00',
-  },
-  {
-    value: '02:00:00',
-    label: '02:00:00',
-  },
-  {
-    value: '02:30:00',
-    label: '02:30:00',
-  },
-  {
-    value: '03:00:00',
-    label: '03:00:00',
-  },
-  {
-    value: '03:30:00',
-    label: '03:30:00',
-  },
-  {
-    value: '04:00:00',
-    label: '04:00:00',
-  },
-  {
-    value: '04:30:00',
-    label: '04:30:00',
-  },
-  {
-    value: '05:00:00',
-    label: '05:00:00',
-  },
-  {
-    value: '05:30:00',
-    label: '05:30:00',
-  },
-  {
-    value: '06:00:00',
-    label: '06:00:00',
-  },
-  {
-    value: '06:30:00',
-    label: '06:30:00',
-  },
-  {
-    value: '07:00:00',
-    label: '07:00:00',
-  },
-  {
-    value: '07:30:00',
-    label: '07:30:00',
-  },
-  {
-    value: '08:00:00',
-    label: '08:00:00',
-  },
-  {
-    value: '08:30:00',
-    label: '08:30:00',
-  },
-  {
-    value: '09:00:00',
-    label: '09:00:00',
-  },
-  {
-    value: '09:30:00',
-    label: '09:30:00',
-  },
-  {
-    value: '10:00:00',
-    label: '10:00:00',
-  },
-  {
-    value: '10:30:00',
-    label: '10:30:00',
-  },
-  {
-    value: '11:00:00',
-    label: '11:00:00',
-  },
-  {
-    value: '11:30:00',
-    label: '11:30:00',
-  },
-  {
-    value: '12:00:00',
-    label: '12:00:00',
-  },
-  {
-    value: '12:30:00',
-    label: '12:30:00',
-  },
-  {
-    value: '13:00:00',
-    label: '13:00:00',
-  },
-  {
-    value: '13:30:00',
-    label: '13:30:00',
-  },
-  {
-    value: '14:00:00',
-    label: '14:00:00',
-  },
-  {
-    value: '14:30:00',
-    label: '14:30:00',
-  },
-  {
-    value: '15:00:00',
-    label: '15:00:00',
-  },
-  {
-    value: '15:30:00',
-    label: '15:30:00',
-  },
-  {
-    value: '16:00:00',
-    label: '16:00:00',
-  },
-  {
-    value: '16:30:00',
-    label: '16:30:00',
-  },
-  {
-    value: '17:00:00',
-    label: '17:00:00',
-  },
-  {
-    value: '17:30:00',
-    label: '17:30:00',
-  },
-  {
-    value: '18:00:00',
-    label: '18:00:00',
-  },
-  {
-    value: '18:30:00',
-    label: '18:30:00',
-  },
-  {
-    value: '19:00:00',
-    label: '19:00:00',
-  },
-  {
-    value: '19:30:00',
-    label: '19:30:00',
-  },
-  {
-    value: '20:00:00',
-    label: '20:00:00',
-  },
-  {
-    value: '20:30:00',
-    label: '20:30:00',
-  },
-  {
-    value: '21:00:00',
-    label: '21:00:00',
-  },
-  {
-    value: '21:30:00',
-    label: '21:30:00',
-  },
-  {
-    value: '22:00:00',
-    label: '22:00:00',
-  },
-  {
-    value: '22:30:00',
-    label: '22:30:00',
-  },
-  {
-    value: '23:00:00',
-    label: '23:00:00',
-  },
-  {
-    value: '23:30:00',
-    label: '23:30:00',
-  },
-];
+const timeOptions24 = timeOptions12.map((t) => {
+  return { ...t, label: t.value };
+});
 
 const getMatchingDayPair = (day, daysConf) => {
   const dayGroup = [];
@@ -443,7 +252,7 @@ const OpeningHoursUnstyled = (props) => {
     verticalTimePairs,
     rootContainerStyles,
     rootContainerClassName,
-    dayButtonComponent,
+    renderDayButton,
     dayButtonContainerStyles,
     dayButtonContainerClassName,
     dayButtonActiveElementStyles,
@@ -454,12 +263,12 @@ const OpeningHoursUnstyled = (props) => {
     labelContainerClassName,
     labelElementStyles,
     labelElementClassName,
-    copyButtonComponent,
+    renderCopyButton,
     copyButtonContainerStyles,
     copyButtonContainerClassName,
     copyButtonElementStyles,
     copyButtonElementClassName,
-    selectComponent,
+    renderSelect,
     selectContainerStyles,
     selectContainerClassName,
     selectElementStyles,
@@ -612,12 +421,10 @@ const OpeningHoursUnstyled = (props) => {
         {daysConfig &&
           daysConfig.map((day, i, arr) => {
             if (shouldShowDayAsOpen(day, arr) && day.id.split('_')[1] !== 'close') {
-              if (dayButtonComponent) {
-                return cloneElement(dayButtonComponent, {
-                  key: `${day.id}${i}-dayButton`,
-                  type: 'button',
-                  style: dayButtonActiveElementStyles,
-                  className: dayButtonActiveElementClassName,
+              if (typeof renderDayButton === 'function') {
+                return renderDayButton({
+                  key: `${day.id}${i}-btn`,
+                  text: day.label[0],
                   onClick: () => hideDayToggle(day),
                 });
               }
@@ -633,12 +440,10 @@ const OpeningHoursUnstyled = (props) => {
                 </button>
               );
             } else if (shouldShowDayAsClosed(day, arr) && day.id.split('_')[1] !== 'close') {
-              if (dayButtonComponent) {
-                return cloneElement(dayButtonComponent, {
-                  key: `${day.id}${i}-dayButton`,
-                  type: 'button',
-                  style: dayButtonInactiveElementStyles,
-                  className: dayButtonInactiveElementClassName,
+              if (typeof renderDayButton === 'function') {
+                return renderDayButton({
+                  key: `${day.id}${i}-btn`,
+                  text: day.label[0],
                   onClick: () => showDayToggle(day),
                 });
               }
@@ -727,8 +532,8 @@ const OpeningHoursUnstyled = (props) => {
                       className={selectContainerClassName}
                       style={selectContainerStyles}
                     >
-                      {selectComponent ? (
-                        cloneElement(selectComponent, {
+                      {typeof renderSelect === 'function' ? (
+                        renderSelect({
                           key: `${open.id}${i}-select`,
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, open, arr)
@@ -765,8 +570,8 @@ const OpeningHoursUnstyled = (props) => {
                       className={selectContainerClassName}
                       style={selectContainerStyles}
                     >
-                      {selectComponent ? (
-                        cloneElement(selectComponent, {
+                      {typeof renderSelect === 'function' ? (
+                        renderSelect({
                           key: `${close.id}${i}-select`,
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, close, arr)
@@ -814,14 +619,8 @@ const OpeningHoursUnstyled = (props) => {
                         className={copyButtonContainerClassName}
                       >
                         <div>
-                          {copyButtonComponent ? (
-                            cloneElement(copyButtonComponent, {
-                              key: `${close.id}-${i}-button`,
-                              type: 'button',
-                              onClick: () => copyAll(day),
-                              className: copyButtonElementClassName,
-                              style: copyButtonElementStyles,
-                            })
+                          {typeof renderCopyButton === 'function' ? (
+                            renderCopyButton({ onClick: () => copyAll(day) })
                           ) : (
                             <button
                               key={`${close.id}-${i}-button`}
