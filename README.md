@@ -2,7 +2,7 @@
 
 # Check out the docs
 
-<a href="https://sprightly-cendol-934003.netlify.app/"><h2>Docs</h2></a>
+[Docs](https://sprightly-cendol-934003.netlify.app)
 
 <p align="center">
   <img src="https://github.com/Perrottarichard/react-opening-hours/blob/master/vertical_example.png?raw=true" />
