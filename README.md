@@ -3,7 +3,7 @@
 [Docs](https://sprightly-cendol-934003.netlify.app)
 
 <p align="center">
-  <img src="https://github.com/Perrottarichard/react-opening-hours/blob/master/vertical_example.png?raw=true" />
+  <img src="https://github.com/Perrottarichard/react-opening-hours/blob/master/vertical_opening_hours.png?raw=true" />
   <img src="https://github.com/Perrottarichard/react-opening-hours/blob/master/horizontal_opening_hours.png?raw=true" />
 </p>
 
