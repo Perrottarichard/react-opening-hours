@@ -1,8 +1,78 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-window.React = React;
 
-const timeOptions12 = [
+type TimeValue =
+  | '00:00:00'
+  | '00:30:00'
+  | '01:00:00'
+  | '01:30:00'
+  | '02:00:00'
+  | '02:30:00'
+  | '03:00:00'
+  | '03:30:00'
+  | '04:00:00'
+  | '04:30:00'
+  | '05:00:00'
+  | '05:30:00'
+  | '06:00:00'
+  | '06:30:00'
+  | '07:00:00'
+  | '07:30:00'
+  | '08:00:00'
+  | '08:30:00'
+  | '09:00:00'
+  | '09:30:00'
+  | '10:00:00'
+  | '10:30:00'
+  | '11:00:00'
+  | '11:30:00'
+  | '12:00:00'
+  | '12:30:00'
+  | '13:00:00'
+  | '13:30:00'
+  | '14:00:00'
+  | '14:30:00'
+  | '15:00:00'
+  | '15:30:00'
+  | '16:00:00'
+  | '16:30:00'
+  | '17:00:00'
+  | '17:30:00'
+  | '18:00:00'
+  | '18:30:00'
+  | '19:00:00'
+  | '19:30:00'
+  | '20:00:00'
+  | '20:30:00'
+  | '21:00:00'
+  | '21:30:00'
+  | '22:00:00'
+  | '22:30:00'
+  | '23:00:00'
+  | '23:30:00'
+  | 'closed';
+type TimeOption = { value: TimeValue; label: string };
+
+type FormValuesKey =
+  | 'sun_open'
+  | 'sun_close'
+  | 'mon_open'
+  | 'mon_close'
+  | 'tue_open'
+  | 'tue_close'
+  | 'wed_open'
+  | 'wed_close'
+  | 'thu_open'
+  | 'thu_close'
+  | 'fri_open'
+  | 'fri_close'
+  | 'sat_open'
+  | 'sat_close';
+type FormValues = {
+  [key in FormValuesKey]: TimeValue;
+};
+
+const timeOptions12: TimeOption[] = [
   {
     value: '00:00:00',
     label: '12:00am',
@@ -197,41 +267,90 @@ const timeOptions12 = [
   },
 ];
 
-const timeOptions24 = timeOptions12.map((t) => {
+type Day = { id: string; time: string; label: string; seq: number };
+
+const timeOptions24: TimeOption[] = timeOptions12.map((t) => {
   return { ...t, label: t.value };
 });
 
-const getMatchingDayPair = (day, daysConf) => {
+interface OpeningHoursProps {
+  getValues: (formValues: FormValues) => void;
+  values: FormValues;
+  ampm?: boolean;
+  verticalTimePairs?: boolean;
+  rootContainerStyles?: React.CSSProperties;
+  rootContainerClassName?: string;
+  renderDayButton?: (buttonProps: {
+    id: string;
+    text: string;
+    onClick: () => void;
+    active: boolean;
+  }) => ReactNode;
+  dayButtonContainerStyles?: React.CSSProperties;
+  dayButtonContainerClassName?: string;
+  dayButtonActiveElementStyles?: React.CSSProperties;
+  dayButtonInactiveElementStyles?: React.CSSProperties;
+  dayButtonActiveElementClassName?: string;
+  dayButtonInactiveElementClassName?: string;
+  renderLabel?: (labelProps: { id: string; htmlFor: string; label: string }) => ReactNode;
+  labelContainerStyles?: React.CSSProperties;
+  labelContainerClassName?: string;
+  labelElementStyles?: React.CSSProperties;
+  labelElementClassName?: string;
+  renderCopyButton?: (buttonProps: { onClick: () => void }) => ReactNode;
+  copyButtonContainerStyles?: React.CSSProperties;
+  copyButtonContainerClassName?: string;
+  copyButtonElementStyles?: React.CSSProperties;
+  copyButtonElementClassName?: string;
+  selectType?: 'react-select' | 'native';
+  renderSelect?: (selectProps: {
+    id: string;
+    options: TimeOption[];
+    value: TimeOption | undefined;
+    onChange: (event: any) => void;
+  }) => ReactNode;
+  selectContainerStyles?: React.CSSProperties;
+  selectContainerClassName?: string;
+  selectElementStyles?: React.CSSProperties;
+  selectElementClassName?: string;
+  showCopyToAll: boolean;
+}
+
+const getMatchingDayPair = (day: Day, daysConf: Day[]) => {
   const dayGroup = [];
   if (day.id.split('_')[1] === 'open') {
     dayGroup[0] = day;
-    const closeDay = daysConf.find((x) => x.id.split('_')[1] === 'close' && x.label === day.label);
+    const closeDay: Day = daysConf.find(
+      (x) => x.id.split('_')[1] === 'close' && x.label === day.label
+    )!;
     dayGroup[1] = closeDay;
   } else {
-    const openDay = daysConf.find((x) => x.id.split('_')[1] === 'open' && x.label === day.label);
+    const openDay: Day = daysConf.find(
+      (x) => x.id.split('_')[1] === 'open' && x.label === day.label
+    )!;
     dayGroup[0] = openDay;
     dayGroup[1] = day;
   }
   return dayGroup;
 };
 
-const shouldShowDayAsOpen = (day, daysConf) => {
+const shouldShowDayAsOpen = (day: Day, daysConf: Day[]) => {
   const openTime = getMatchingDayPair(day, daysConf)[0]?.time;
   const closeTime = getMatchingDayPair(day, daysConf)[1]?.time;
   return !!(openTime !== 'closed' && closeTime !== 'closed');
 };
 
-const shouldShowDayAsClosed = (day, daysConf) => {
+const shouldShowDayAsClosed = (day: Day, daysConf: Day[]) => {
   const openTime = getMatchingDayPair(day, daysConf)[0]?.time;
   const closeTime = getMatchingDayPair(day, daysConf)[1]?.time;
   return !!(openTime === 'closed' && closeTime === 'closed');
 };
 
-const shouldRenderInput = (day, daysConf) => {
+const shouldRenderInput = (day: Day, daysConf: Day[]) => {
   return shouldShowDayAsOpen(day, daysConf);
 };
 
-const shouldDisableTimeOption = (timeOption, day, daysConf) => {
+const shouldDisableTimeOption = (timeOption: TimeOption, day: Day, daysConf: Day[]) => {
   const openTime = getMatchingDayPair(day, daysConf)[0]?.time;
   const closeTime = getMatchingDayPair(day, daysConf)[1]?.time;
   const baseDate = new Date('1970-01-01');
@@ -244,7 +363,7 @@ const shouldDisableTimeOption = (timeOption, day, daysConf) => {
   return dateTimeWithTimeOption <= dateTimeOpen;
 };
 
-const OpeningHoursUnstyled = (props) => {
+const OpeningHoursUnstyled: React.FC<OpeningHoursProps> = (props) => {
   const {
     getValues,
     values,
@@ -301,30 +420,29 @@ const OpeningHoursUnstyled = (props) => {
     if (values && Object.keys(values).length) {
       const daysConfigWithUserData = [];
       for (const dayKey in values) {
-        const dayMatch = daysConfig.find((day) => day.id === dayKey);
-        if (dayMatch) {
-          const newDay = {
-            ...dayMatch,
-            time: values[dayKey],
-          };
-          daysConfigWithUserData.push(newDay);
-        }
+        const typedDayKey = dayKey as keyof FormValues;
+        const dayMatch: Day = daysConfig.find((day) => day.id === dayKey)!;
+        const newDay = {
+          ...dayMatch,
+          time: values[typedDayKey] as TimeValue,
+        };
+        daysConfigWithUserData.push(newDay);
       }
       setDaysConfig(daysConfigWithUserData.sort((x, y) => x.seq - y.seq));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const hideDayToggle = (dayToHide) => {
+  const hideDayToggle = (dayToHide: Day) => {
     const [openDay, closeDay] = getMatchingDayPair(dayToHide, daysConfig);
     const newDaysConfig = daysConfig.map((day) => {
       if (day.id === openDay?.id) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [openDay.id]: 'closed' };
         });
         return { ...openDay, time: 'closed' };
       } else if (day.id === closeDay?.id) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [closeDay.id]: 'closed' };
         });
         return { ...closeDay, time: 'closed' };
@@ -335,16 +453,16 @@ const OpeningHoursUnstyled = (props) => {
     setDaysConfig(newDaysConfig);
   };
 
-  const showDayToggle = (dayToShow) => {
+  const showDayToggle = (dayToShow: Day) => {
     const [openDay, closeDay] = getMatchingDayPair(dayToShow, daysConfig);
     const newDaysConfig = daysConfig.map((day) => {
       if (day.id === openDay?.id) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [openDay.id]: '09:00:00' };
         });
         return { ...openDay, time: '09:00:00' };
       } else if (day.id === closeDay?.id) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [closeDay.id]: '17:00:00' };
         });
         return { ...closeDay, time: '17:00:00' };
@@ -355,11 +473,11 @@ const OpeningHoursUnstyled = (props) => {
     setDaysConfig(newDaysConfig);
   };
 
-  const handleChangeTime = (dayToChange, newTime) => {
-    const oldDay = daysConfig.find((x) => x.id === dayToChange.id);
+  const handleChangeTime = (dayToChange: Day, newTime: TimeValue) => {
+    const oldDay: Day = daysConfig.find((x) => x.id === dayToChange.id)!;
     const newDaysConfig = daysConfig.map((day) => {
       if (day.id === dayToChange.id) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [dayToChange.id]: newTime };
         });
         return { ...oldDay, time: newTime };
@@ -370,24 +488,24 @@ const OpeningHoursUnstyled = (props) => {
     setDaysConfig(newDaysConfig);
   };
 
-  const copyAll = (dayToCopy) => {
+  const copyAll = (dayToCopy: Day) => {
     const [openDay, closeDay] = getMatchingDayPair(dayToCopy, daysConfig);
     const newDaysConfig = daysConfig.map((day, i, arr) => {
       if (
         day.id.split('_')[1] === 'open' &&
         shouldShowDayAsOpen(day, arr) &&
-        day.id !== openDay?.id
+        day.id !== openDay.id
       ) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [day.id]: openDay?.time };
         });
         return { ...day, time: openDay?.time };
       } else if (
         day.id.split('_')[1] === 'close' &&
         shouldShowDayAsOpen(day, arr) &&
-        day.id !== closeDay?.id
+        day.id !== closeDay.id
       ) {
-        setFormValues((prev) => {
+        setFormValues((prev: FormValues) => {
           return { ...prev, [day.id]: closeDay?.time };
         });
         return { ...day, time: closeDay?.time };
@@ -416,7 +534,7 @@ const OpeningHoursUnstyled = (props) => {
                 justifyContent: 'start',
                 alignItems: 'center',
               }
-            : null
+            : undefined
       }
     >
       <div className={dayButtonContainerClassName} style={dayButtonContainerStyles}>
@@ -459,7 +577,7 @@ const OpeningHoursUnstyled = (props) => {
                     dayButtonInactiveElementStyles
                       ? dayButtonInactiveElementStyles
                       : dayButtonActiveElementClassName
-                        ? null
+                        ? undefined
                         : {
                             opacity: 0.3,
                           }
@@ -550,8 +668,10 @@ const OpeningHoursUnstyled = (props) => {
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, open, arr)
                           ),
-                          value: timeOptions.find((t) => t.value === formValues[open.id]),
-                          onChange: (event) => {
+                          value: timeOptions.find(
+                            (t) => t.value === formValues[open.id as FormValuesKey]
+                          ),
+                          onChange: (event: any) => {
                             switch (selectType) {
                               case 'react-select':
                                 handleChangeTime(open, event.value);
@@ -569,11 +689,11 @@ const OpeningHoursUnstyled = (props) => {
                       ) : (
                         <select
                           key={`${open.id}-select`}
-                          value={formValues[open.id]}
-                          onChange={(event) => {
+                          value={formValues[open.id as FormValuesKey]}
+                          onChange={(event: any) => {
                             handleChangeTime(open, event.target.value);
                           }}
-                          styles={selectElementStyles}
+                          style={selectElementStyles}
                           className={selectElementClassName}
                         >
                           {timeOptions.map((t) => (
@@ -599,8 +719,10 @@ const OpeningHoursUnstyled = (props) => {
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, close, arr)
                           ),
-                          value: timeOptions.find((t) => t.value === formValues[close.id]),
-                          onChange: (event) => {
+                          value: timeOptions.find(
+                            (t) => t.value === formValues[close.id as FormValuesKey]
+                          ),
+                          onChange: (event: any) => {
                             switch (selectType) {
                               case 'react-select':
                                 handleChangeTime(close, event.value);
@@ -618,11 +740,11 @@ const OpeningHoursUnstyled = (props) => {
                       ) : (
                         <select
                           key={`${close.id}-select`}
-                          value={formValues[close.id]}
-                          onChange={(event) => {
+                          value={formValues[close.id as FormValuesKey]}
+                          onChange={(event: any) => {
                             handleChangeTime(close, event.target.value);
                           }}
-                          styles={selectElementStyles}
+                          style={selectElementStyles}
                           className={selectElementClassName}
                         >
                           {timeOptions.map((t) => (

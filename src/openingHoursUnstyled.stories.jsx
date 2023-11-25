@@ -1,3 +1,4 @@
+import React from 'react';
 import { ContentCopyOutlined } from '@mui/icons-material';
 import { OpeningHoursUnstyled } from './index';
 import { IconButton, Tooltip, Typography } from '@mui/material';
