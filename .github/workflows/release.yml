@@ -62,8 +62,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Copy .npmignore
-        run: cp .npmignore dist/
+      - name: Create .npmignore
+        run: |
+          cat << EOF >> .npmignore
+          EOF
 
       - name: Publish to NPM
         run: npm publish
