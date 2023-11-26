@@ -313,7 +313,7 @@ interface OpeningHoursProps {
   selectContainerClassName?: string;
   selectElementStyles?: React.CSSProperties;
   selectElementClassName?: string;
-  showCopyToAll: boolean;
+  showCopyToAll?: boolean;
 }
 
 const getMatchingDayPair = (day: Day, daysConf: Day[]) => {
@@ -396,7 +396,7 @@ const OpeningHoursUnstyled: React.FC<OpeningHoursProps> = (props) => {
     selectElementClassName,
     showCopyToAll,
   } = props;
-  let timeOptions = ampm ? timeOptions12 : timeOptions24;
+  const timeOptions = ampm ? timeOptions12 : timeOptions24;
 
   const [formValues, setFormValues] = useState(values);
   const [daysConfig, setDaysConfig] = useState([
