@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create .npmignore
+        run: touch .npmignore
+
       - name: Build
         run: npm run build
 
@@ -62,12 +65,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create .npmignore
-        run: |
-          cat << EOF >> .npmignore
-          EOF
+      - name: List files before publish
+        run: ls -al
 
       - name: Publish to NPM
         run: npm publish
+        working-directory: ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+      - name: List files after publish
+        run: ls -al
