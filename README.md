@@ -1,6 +1,7 @@
 <h1 align="center">React Opening Hours</h1>
 
 [![npm version](https://badge.fury.io/js/react-opening-hours.svg)](https://badge.fury.io/js/react-opening-hours)
+![release workflow](https://github.com/perrottarichard/react-opening-hours/actions/workflows/release.yml/badge.svg)
 [Docs](https://sprightly-cendol-934003.netlify.app)
 
 <p align="center">
