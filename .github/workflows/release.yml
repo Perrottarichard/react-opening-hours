@@ -61,7 +61,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Print npm config
+        run: npm config list
+
       - name: Publish to NPM
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-        run: npm publish
