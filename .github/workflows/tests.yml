@@ -1,4 +1,4 @@
-name: Release
+name: Tests
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: npm run build
 
-  publish:
+  test:
     runs-on: ubuntu-latest
 
     needs: build
@@ -37,12 +37,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - name: Test
+        run: npm test
