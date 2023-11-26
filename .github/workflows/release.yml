@@ -70,7 +70,6 @@ jobs:
 
       - name: Publish to NPM
         run: npm publish
-        working-directory: ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
