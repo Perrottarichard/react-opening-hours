@@ -50,9 +50,6 @@ jobs:
     needs: test
 
     steps:
-      - name: Debug environment variables
-        run: 'echo "NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}"'
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -64,5 +61,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check Token
+        run: 'echo "NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}"'
+
       - name: Publish to NPM
-        run: npm publish --token ${{ secrets.NPM_PUBLISH_TOKEN }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
