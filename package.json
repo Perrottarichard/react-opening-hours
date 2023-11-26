@@ -1,6 +1,6 @@
 {
   "name": "react-opening-hours",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A simple form UI for collecting hours of operation",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -10,7 +10,6 @@
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
     "ladle": "ladle serve",
-    "prepublish": "npm run prettier && npm run lint && npm run test",
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs"
