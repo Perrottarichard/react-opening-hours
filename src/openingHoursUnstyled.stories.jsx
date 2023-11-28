@@ -12,16 +12,16 @@ const customSelectStyles = {
     ...provided,
     marginRight: 8,
     width: '120px',
-    fontFamily: 'monospace',
-    border: '1px solid ' + (state.isFocused ? '#606060' : '#3acf62'),
+    fontFamily: 'tahoma',
+    border: '1px solid ' + (state.isFocused ? '#909090' : '#6be88c'),
     boxShadow: state.isFocused ? '#000000' : null,
     '&:hover': {
-      border: '1px solid #3acf62',
+      border: '1px solid #6be88c',
     },
   }),
   option: (provided, state) => ({
     ...provided,
-    fontFamily: 'monospace',
+    fontFamily: 'tahoma',
     background: state.isFocused ? '#909090' : state.isSelected ? '#606060' : null,
     color: state.isFocused || state.isSelected ? 'white' : 'black',
   }),
@@ -35,10 +35,10 @@ const AntDesignButton = ({ id, text, onClick, active }) => {
     fontWeight: 'bold',
     textAlign: 'center',
     textDecoration: 'none',
-    border: '1px solid #3acf62',
+    border: '1px solid #6be88c',
     borderRadius: '4px',
     cursor: 'pointer',
-    color: '#3acf62',
+    color: '#6be88c',
     backgroundColor: '#606060',
     marginRight: 12,
     transition: 'background-color 0.3s, color 0.3s, border 0.3s',
@@ -55,27 +55,28 @@ const AntDesignButton = ({ id, text, onClick, active }) => {
 
 export const OpeningHoursUnstyledStory = () => (
   <OpeningHoursUnstyled
-    values={{
-      sun_open: 'closed',
-      sun_close: 'closed',
-      mon_open: '09:00:00',
-      mon_close: '17:00:00',
-      tue_open: '09:00:00',
-      tue_close: '17:00:00',
-      wed_open: '09:00:00',
-      wed_close: '17:00:00',
-      thu_open: '09:00:00',
-      thu_close: '17:00:00',
-      fri_open: '09:00:00',
-      fri_close: '17:00:00',
-      sat_open: 'closed',
-      sat_close: 'closed',
-    }}
     getValues={(values) => console.log(values)}
+    defaultValues={[
+      { id: 'dimanche_ouvert', time: 'closed', label: 'Dimanche' },
+      { id: 'dimanche_fermé', time: 'closed', label: 'Dimanche' },
+      { id: 'lundi_ouvert', time: '09:00:00', label: 'Lundi' },
+      { id: 'lundi_fermé', time: '17:00:00', label: 'Lundi' },
+      { id: 'mardi_ouvert', time: '09:00:00', label: 'Mardi' },
+      { id: 'mardi_fermé', time: '17:00:00', label: 'Mardi' },
+      { id: 'mercredi_ouvert', time: '09:00:00', label: 'Mercredi' },
+      { id: 'mercredi_fermé', time: '17:00:00', label: 'Mercredi' },
+      { id: 'jeudi_ouvert', time: '09:00:00', label: 'Jeudi' },
+      { id: 'jeudi_fermé', time: '17:00:00', label: 'Jeudi' },
+      { id: 'vendredi_ouvert', time: '09:00:00', label: 'Vendredi' },
+      { id: 'vendredi_fermé', time: '17:00:00', label: 'Vendredi' },
+      { id: 'samedi_ouvert', time: 'closed', label: 'Samedi' },
+      { id: 'samedi_fermé', time: 'closed', label: 'Samedi' },
+    ]}
     ampm
     showCopyToAll
     dayButtonContainerStyles={{ marginBottom: 12 }}
-    renderDayButton={(props) => <AntDesignButton {...props} />}
+    renderDayButton={(props) => <AntDesignButton key={props.id} {...props} />}
+    getDayButtonLabelText={(label) => label.slice(0, 3)}
     renderCopyButton={({ onClick }) => (
       <Tooltip title="Copy To All">
         <IconButton onClick={onClick} sx={{ position: 'absolute', right: 30, top: 0 }}>
@@ -88,12 +89,7 @@ export const OpeningHoursUnstyledStory = () => (
     selectType="react-select"
     renderSelect={(props) => <Select styles={customSelectStyles} {...props} />}
     renderLabel={({ id, label, ...other }) => (
-      <Typography
-        key={id}
-        variant="overline"
-        {...other}
-        sx={{ lineHeight: 3, fontFamily: 'monospace' }}
-      >
+      <Typography key={id} variant="body1" {...other} sx={{ lineHeight: 3, fontFamily: 'tahoma' }}>
         {label}
       </Typography>
     )}
