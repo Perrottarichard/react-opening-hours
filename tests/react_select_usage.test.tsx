@@ -100,7 +100,6 @@ describe('kitchen sink example', () => {
         )}
         selectContainerStyles={{ width: '140px' }}
         labelContainerStyles={{ width: '90px' }}
-        selectType="react-select"
         renderSelect={(props) => <Select styles={customSelectStyles} {...props} />}
         renderLabel={({ id, label, ...other }) => (
           <Typography

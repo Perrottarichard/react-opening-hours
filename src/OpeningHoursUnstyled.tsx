@@ -285,9 +285,9 @@ interface OpeningHoursProps {
   copyButtonContainerClassName?: string;
   copyButtonElementStyles?: React.CSSProperties;
   copyButtonElementClassName?: string;
-  selectType?: 'react-select' | 'native';
   renderSelect?: (selectProps: {
     id: string;
+    day: Day;
     options: TimeOption[];
     value: TimeOption | undefined;
     onChange: (event: any) => void;
@@ -368,7 +368,6 @@ const OpeningHoursUnstyled: React.FC<OpeningHoursProps> = (props) => {
     copyButtonContainerClassName,
     copyButtonElementStyles,
     copyButtonElementClassName,
-    selectType,
     renderSelect,
     selectContainerStyles,
     selectContainerClassName,
@@ -611,22 +610,17 @@ const OpeningHoursUnstyled: React.FC<OpeningHoursProps> = (props) => {
                       {typeof renderSelect === 'function' ? (
                         renderSelect({
                           id: `${open.id}${i}-select`,
+                          day: day,
+
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, open, arr)
                           ),
                           value: timeOptions.find((t) => t.value === open.time),
                           onChange: (event: any) => {
-                            switch (selectType) {
-                              case 'react-select':
-                                handleChangeTime(open, event.value);
-                                break;
-
-                              case 'native':
-                                handleChangeTime(open, event.target.value);
-                                break;
-
-                              default:
-                                console.log('Unknown select type');
+                            if (event.value) {
+                              handleChangeTime(open, event.value);
+                            } else {
+                              handleChangeTime(open, event.target.value);
                             }
                           },
                         })
@@ -660,22 +654,16 @@ const OpeningHoursUnstyled: React.FC<OpeningHoursProps> = (props) => {
                       {typeof renderSelect === 'function' ? (
                         renderSelect({
                           id: `${close.id}${i}-select`,
+                          day: day,
                           options: timeOptions.filter(
                             (t) => !shouldDisableTimeOption(t, close, arr)
                           ),
                           value: timeOptions.find((t) => t.value === close.time),
                           onChange: (event: any) => {
-                            switch (selectType) {
-                              case 'react-select':
-                                handleChangeTime(close, event.value);
-                                break;
-
-                              case 'native':
-                                handleChangeTime(close, event.target.value);
-                                break;
-
-                              default:
-                                console.log('Unknown select type');
+                            if (event.value) {
+                              handleChangeTime(close, event.value);
+                            } else {
+                              handleChangeTime(close, event.target.value);
                             }
                           },
                         })
